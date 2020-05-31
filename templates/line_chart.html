@@ -2,6 +2,16 @@
 <html lang="en">
 
 <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<GA-ID>"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', '<GA-ID>');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -174,10 +184,10 @@
   <div class="dropdown">
     <button onclick="myFunction()" class="dropbtn">Select Currency</button>
     <div id="myDropdown" class="dropdown-content">
-      <a href="{{ url_for('line',crypto_symbol='BTC') }}" >BTC</a>
-      <a href="{{ url_for('line',crypto_symbol='ETH') }}" >ETH</a>
-      <a href="{{ url_for('line',crypto_symbol='XRP') }}" >XRP</a>
-      <a href="{{ url_for('line',crypto_symbol='LTC') }}" >LTC</a>
+      <a href="{{ url_for('line',crypto_symbol='BTC') }}" onclick="ga('send', 'event', 'BTC', 'click');">BTC</a>
+      <a href="{{ url_for('line',crypto_symbol='ETH') }}" onclick="ga('send', 'event', 'ETH', 'click');">ETH</a>
+      <a href="{{ url_for('line',crypto_symbol='XRP') }}" onclick="ga('send', 'event', 'XRP', 'click');">XRP</a>
+      <a href="{{ url_for('line',crypto_symbol='LTC') }}" onclick="ga('send', 'event', 'LTC', 'click');">LTC</a>
     </div>
   </div>
   <script>
