@@ -53,8 +53,3 @@ To run the project locally,
   ```
 
 2. Navigate to Home page [http://localhost:8000/]( http://localhost:8000/) to view the charts.
-
-
-## Enhancements I will add soon
-
-1. Add Google Analytics Tracking ID 
