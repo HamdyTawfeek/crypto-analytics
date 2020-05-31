@@ -4,7 +4,13 @@
     
 ### Introduction
 
-This is a simple single web application to visualize [coinAPI](https://www.coinapi.io/) data using [Chart.js](https://www.chartjs.org/) for cryptocurrencies Bitcoin (BTC), Ethereum (ETH), Ripple (XRP) and Litecoin (LTC)
+This is a simple single web application to visualize [coinAPI](https://www.coinapi.io/) data using [Chart.js](https://www.chartjs.org/) for the following cryptocurrencies:
+
+ * Bitcoin (**BTC**)
+ * Ethereum (**ETH**)
+ * Ripple (**XRP**) 
+ * Litecoin (**LTC**)
+
 
 ### Tech Stack
 
