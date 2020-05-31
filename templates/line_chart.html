@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+    <style>
+      .dropbtn {
+        background-color: #3498DB;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+      }
+      
+      .dropbtn:hover, .dropbtn:focus {
+        background-color: #2980B9;
+      }
+      
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+      
+      .dropdown-content {
+        display: none;
+        text-align:center;
+        position: relative;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        overflow: auto;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+      }
+      
+      .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+      }
+      
+      .dropdown a:hover {background-color: #ddd;}
+      
+      .show {display: block;}
+      canvas{
+        margin: 0 auto;
+      }
+      </style>
+
+    <title>Cryptocurrency Analytics</title>
+    <script>
+        $(function () {
+            var ctx = document.getElementById("line-chart").getContext('2d');
+            var data =  {
+                labels: [
+                      {% for date in data.dates %}
+                        "{{ date }}",
+                      {% endfor %}
+                    ],
+                datasets: [{ 
+                    data:  [
+                                {% for price in data.price_open %}
+                                    {{ price }},
+                                {% endfor %}
+                              
+                              ],
+                    label: "Opening Price",
+                    borderColor: "#3e95cd",
+                    fill: false
+                  }, { 
+                    data: [
+                                {% for price in data.price_close %}
+                                    {{ price }},
+                                {% endfor %}
+                              ],
+                    label: "Closing Price",
+                    borderColor: "#8e5ea2",
+                    fill: false
+                  },{ 
+                    data:  [
+                                {% for price in data.price_low %}
+                                    {{ price }},
+                                {% endfor %}
+                              
+                              ],
+                    label: "Low Price",
+                    borderColor: "#e8c3b9",
+                    fill: false
+                  },{ 
+                    data:  [
+                                {% for price in data.price_high %}
+                                    {{ price }},
+                                {% endfor %}
+                              
+                              ],
+                    label: "High Price",
+                    borderColor: "#c45850",
+                    fill: false
+                  },
+                ]
+      };
+            var lineChart = new Chart(ctx, {
+                type: 'line',
+                data: data,
+                options: {
+                  responsive: false,
+                  title: {
+                    display: true,
+                    text: '{{ price_title }}',
+                    fontSize: 25
+                  },
+                  
+      }
+            }
+            
+            );
+
+            var ctx2 = document.getElementById("line-chart-sub").getContext('2d');
+            var data2 =  {
+                  labels: [
+                        {% for date in data.dates %}
+                          "{{ date }}",
+                        {% endfor %}
+                      ],
+                  datasets: [{ 
+                      data:  [
+                                  {% for volume in data.volume_traded %}
+                                      {{ volume }},
+                                  {% endfor %}
+                                
+                                ],
+                      label: "Traded Volume",
+                      borderColor: "#3e95cd",
+                      fill: false
+                    }, { 
+                      data: [
+                                  {% for trade in data.trades_count %}
+                                      {{ trade }},
+                                  {% endfor %}
+                                ],
+                      label: "Trades Count",
+                      borderColor: "#8e5ea2",
+                      fill: false
+                    }
+                  ]
+      };
+            var lineChart = new Chart(ctx2, {
+                type: 'line',
+                data: data2,
+                options: {
+                  responsive: false,
+                  title: {
+                    display: true,
+                    text: '{{ trade_title }}',
+                    fontSize: 25
+                  },
+                  
+      }
+            }
+            
+            );
+        });
+
+    </script>
+</head>
+
+<body>
+  
+  <div class="dropdown">
+    <button onclick="myFunction()" class="dropbtn">Select Currency</button>
+    <div id="myDropdown" class="dropdown-content">
+      <a href="{{ url_for('line',crypto_symbol='BTC') }}" >BTC</a>
+      <a href="{{ url_for('line',crypto_symbol='ETH') }}" >ETH</a>
+      <a href="{{ url_for('line',crypto_symbol='XRP') }}" >XRP</a>
+      <a href="{{ url_for('line',crypto_symbol='LTC') }}" >LTC</a>
+    </div>
+  </div>
+  <script>
+    /* When the user clicks on the button, 
+    toggle between hiding and showing the dropdown content */
+    function myFunction() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
+    
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+    </script>
+  
+  <div>
+      <canvas id="line-chart" width="1000px" height="500px"></canvas>
+  </div>
+
+  <div>
+      <canvas id="line-chart-sub" width="1000px" height="500px"></canvas>
+  </div>
+
+
+</body>
+
+</html>
