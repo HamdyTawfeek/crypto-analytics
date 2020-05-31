@@ -8,7 +8,7 @@ def create_database():
     """
     
     # connect to default database
-    conn = psycopg2.connect("host=db dbname=postgres user=postgres password=postgres port=5432")
+    conn = psycopg2.connect("host=db dbname=postgres user=postgres password=postgres")
     conn.set_session(autocommit=True)
     cur = conn.cursor()
     
@@ -20,7 +20,7 @@ def create_database():
     conn.close()    
     
     # connect to cryptodb database
-    conn = psycopg2.connect("host=db dbname=cryptodb user=postgres password=postgres port=5432")
+    conn = psycopg2.connect("host=db dbname=cryptodb user=postgres password=postgres")
     cur = conn.cursor()
     
     return cur, conn

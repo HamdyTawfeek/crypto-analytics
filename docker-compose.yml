@@ -15,7 +15,7 @@ services:
         networks: ['stack']
     web:
         build: .
-        command: python3 app.py 0.0.0.0:8000
+        command: python3 app.py
         volumes:
             - .:/usr/src/app
         ports:
