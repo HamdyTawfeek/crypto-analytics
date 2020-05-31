@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+    db:
+        image: postgres
+        networks: ['stack']
+        environment:
+            - "POSTGRES_HOST_AUTH_METHOD=trust"
+    etl:
+        build: .
+        command: bash -c "python3 etl/create_tables.py 
+                && python3 etl/etl.py" 
+        depends_on:
+            - db
+        networks: ['stack']
+    web:
+        build: .
+        command: python3 app.py 0.0.0.0:8000
+        volumes:
+            - .:/usr/src/app
+        ports:
+            - "8000:8000"
+        depends_on:
+            - db
+            - etl
+        networks: ['stack']
+
+networks:
+    stack:
+        driver: bridge
