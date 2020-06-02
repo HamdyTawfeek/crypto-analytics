@@ -181,7 +181,7 @@
 
 <body>
   
-  <div class="dropdown">
+  <div class="dropdown" style="position: fixed;">
     <button onclick="myFunction()" class="dropbtn">Select Currency</button>
     <div id="myDropdown" class="dropdown-content">
       <a href="{{ url_for('line',crypto_symbol='BTC') }}" onclick="ga('send', 'event', 'BTC', 'click');">BTC</a>
