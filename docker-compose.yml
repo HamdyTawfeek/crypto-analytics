@@ -3,9 +3,14 @@ version: '3'
 services:
     db:
         image: postgres
+        restart: always
         networks: ['stack']
         environment:
-            - "POSTGRES_HOST_AUTH_METHOD=trust"
+            POSTGRES_HOST_AUTH_METHOD: trust
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+        ports:
+            - "5432:5432"
     etl:
         build: .
         command: bash -c "python3 etl/create_tables.py 
@@ -13,6 +18,11 @@ services:
         depends_on:
             - db
         networks: ['stack']
+        environment:
+            POSTGRES_DB: 'postgres'
+            POSTGRES_USER: 'postgres'
+            POSTGRES_PASSWORD: 'postgres'
+            POSTGRES_HOST: 'db'
     web:
         build: .
         command: python3 app.py
@@ -24,6 +34,8 @@ services:
             - db
             - etl
         networks: ['stack']
+
+
 
 networks:
     stack:
